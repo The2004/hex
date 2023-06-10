@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>body{
+        background-color: rgba(0, 0, 0, 0.709);
+        margin: 0px;
+        height: 100%;
+        width: 100%;
+    }
+    
+
+    label{
+        color: white;
+        font-family: Roboto, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    #wrapper{
+        display: flex;
+        align-items: center;
+        height: 100vh;
+        
+    }
+    </style>
+</head>
+<body>
+    <div id="wrapper"><div style="width: 100%;">
+    <textarea id="inputtext" type="text" style="display: block; margin: auto; width: 50%; top: 5px; position: relative;" rows="2" oninput="convert()"></textarea>
+    <div style="position: relative; display: flex; justify-content: center; width: 100%; top:10px">
+    <input id="check1" type="checkbox" onchange="document.querySelector('#check2').checked = false; convert();"><label for="check1">add \x</label>
+    <input id="check2" type="checkbox" onchange="document.querySelector('#check1').checked = false; convert();"><label for="check2">add space</label>
+    <input id="check3" type="checkbox" onclick="convert()"><label for="check3">all caps</label></div>
+    <textarea type="text" id="resultbox" style="display: block; margin: auto; width: 50%; margin-top: 25px; position: relative;" rows="2"></textarea></div></div>
+    <script>
+        function convert(){
+            var text = document.getElementById("inputtext").value
+            var seperator = ''
+            if(document.querySelector('#check1').checked){
+                seperator = "\\x"
+            }else if(document.querySelector('#check2').checked)
+            {
+                seperator = " "    
+            }
+            result = ''
+            
+            for(var i = 0; i < text.length; i++){
+                var charr = ''
+                if(document.querySelector('#check3').checked){
+                    charr = (text[i].charCodeAt(0).toString(16)).toUpperCase()
+                }else{
+                    charr = (text[i].charCodeAt(0).toString(16))
+                }
+                result += seperator + charr
+            }
+            document.querySelector("#resultbox").textContent = result
+            
+        }
+    </script>
+</body>
+</html>
